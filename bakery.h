@@ -1,3 +1,6 @@
+#ifndef BAKERY_H_
+#define BEKERY_H_
+
 class bakery {
     static bool instance;
     static bakery *m;
@@ -15,3 +18,5 @@ public:
     void unlock(int);
     ~bakery();
 };
+
+#endif
