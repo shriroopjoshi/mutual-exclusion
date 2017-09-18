@@ -1,7 +1,9 @@
 #ifndef BAKERY_H_
 #define BEKERY_H_
 
-class bakery {
+#include "algo.h"
+
+class bakery : public algo {
     static bool instance;
     static bakery *m;
     bool *choosing;
@@ -14,8 +16,8 @@ class bakery {
 public:
 
     static bakery* getLock(int);
-    void lock(int);
-    void unlock(int);
+    void lock(int) override;
+    void unlock(int) override;
     ~bakery();
 };
 
