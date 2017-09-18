@@ -3,20 +3,52 @@
 
 #include "algo.h"
 
+/**
+ * tournament class is implementation of Peterson's tournament algorithm for mutual exclusion.
+ * It's base class is algo which is a virtual class containing lock() and unlock()
+ */
 class tournament : public algo {
+    /* variables for singleton pattern */
     static bool instance;
     static tournament *m;
-    int n, p, z;
+    
+    /* number of nodes in the tree */
+    int n;
+    
+    /* points to first node containing process */
+    int p;
+    
+    /* number of processes */
+    int z;
+    
+    /* Used to store index of flag array. Used while unlocking */
     int *process;
+    
+    /* Flags for requesting CS
+       size(flag) = n + (n - 1) where n = number of processes */
     bool *flag;
+    
+    /* Stores victim for each pair of process on each level
+       size(victim) = (n - 1) */
     int *victim;
-    tournament(int i);
+
+    /* initializes memory for z processes */
+    tournament(int);
 
 public:
 
+    /* gives same object. If object is not present, it creates one */
     static tournament* getLock(int);
-    void lock(int) override;
-    void unlock(int) override;
+
+    /* Requests a lock for CS
+       pid: the process-id (thread-id) of requesting process */
+    void lock(int pid) override;
+
+    /* Releases previously acquired lock
+       pid: the process-id (thread-id) of the process */
+    void unlock(int pid) override;
+
+    /* frees memory initialized for z processes */
     ~tournament();
 };
 

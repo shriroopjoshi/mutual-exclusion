@@ -30,22 +30,20 @@ bakery* bakery :: getLock(int n) {
 }
 
 void bakery :: lock(int pid) {
-    // doorway
-    choosing[pid] = true;
-    token[pid] = 1 + max(token);
+    choosing[pid] = true;                       // DOORWAY section
+    token[pid] = 1 + max(token);                // set token one greater than max present 
     choosing[pid] = false;
 
-    // waiting
-    std :: pair<int, int> ti(token[pid], pid);
-    for(int j = 0; j < n; ++j) {
-        while(choosing[j] == true);
-        std :: pair<int, int> tj(token[j], j);
-        while(token[j] != 0 && tj < ti);
+    std :: pair<int, int> ti(token[pid], pid);  // WAITING section
+    for(int j = 0; j < n; ++j) {                // create a pair of <token, id>
+        while(choosing[j] == true);             // wait till everyone has a token
+        std :: pair<int, int> tj(token[j], j);  // compare everyone's pair with seld
+        while(token[j] != 0 && tj < ti);        // thread with lowest pair gets the lock
     }
 }
 
 void bakery :: unlock(int pid) {
-    token[pid] = 0;
+    token[pid] = 0;                             // set the token to minimum
 }
 
 int bakery :: max(int token[]) {
