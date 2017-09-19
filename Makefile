@@ -1,5 +1,5 @@
-#CC = g++
-CC = icpc
+CC = g++
+#CC = icpc
 
 CFLAGS = -Wall -g -std=c++11
 LDFLAGS = -pthread
