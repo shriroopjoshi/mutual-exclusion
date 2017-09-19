@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <thread>
 
 #include "tournament.h"
 
@@ -46,9 +47,11 @@ void tournament :: lock(int pid) {
         flag[ipid] = true;
         victim[(ipid - 1) / 2] = pid;
         if(ipid % 2 == 0) {
-            while(flag[ipid - 1] & (victim[(ipid - 1) / 2] == pid));    // if other process is not requesing CS
+            while(flag[ipid - 1] & (victim[(ipid - 1) / 2] == pid))     // if other process is not requesing CS
+                std :: this_thread :: yield();
         } else {                                                        // move ahead by just checking the flag
-            while(flag[ipid + 1] & (victim[(ipid - 1) / 2] == pid));    // otherwise, check victim
+            while(flag[ipid + 1] & (victim[(ipid - 1) / 2] == pid))     // otherwise, check victim
+                std :: this_thread :: yield();
         }
         process[(pid - 1) * z + i] = ipid;                              // store the index for unlocking
         ipid = (ipid - 1) / 2;
