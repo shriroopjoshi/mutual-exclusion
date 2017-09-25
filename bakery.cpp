@@ -33,7 +33,7 @@ bakery* bakery :: getLock(int n) {
 void bakery :: lock(int pid) {
     pid -= 1;
     choosing[pid] = true;                               // DOORWAY section
-    token[pid] = 1 + max(token);                        // set token one greater than max present 
+    token[pid] = 1 + bakery :: max(token);              // set token one greater than max present 
     choosing[pid] = false;
 
     for(int j = 0; j < n; ++j) {                        // WAITING section
@@ -53,10 +53,10 @@ void bakery :: unlock(int pid) {
     token[pid] = 0;                                     // set the token to minimum
 }
 
-int bakery :: max(int token[]) {
-    int max = token[0];
+int bakery :: max(volatile int token[]) {
+    int m = token[0];
     for(int i = 1; i < n; ++i) {
-        max = std :: max(token[i], max);
+        m = token[i] > m? token[i] : m;
     }
-    return max;
+    return m;
 }

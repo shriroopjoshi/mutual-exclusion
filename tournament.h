@@ -22,15 +22,15 @@ class tournament : public algo {
     int z;
     
     /* Used to store index of flag array. Used while unlocking */
-    int *process;
+    volatile int *process;
     
     /* Flags for requesting CS
        size(flag) = n + (n - 1) where n = number of processes */
-    bool *flag;
+    volatile bool *flag;
     
     /* Stores victim for each pair of process on each level
        size(victim) = (n - 1) */
-    int *victim;
+    volatile int *victim;
 
     /* initializes memory for z processes */
     tournament(int);

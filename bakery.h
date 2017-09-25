@@ -13,10 +13,10 @@ class bakery : public algo {
     static bakery *m;
 
     /* array for doorway section */
-    bool *choosing;
+    volatile bool *choosing;
 
     /* stores token */
-    int *token;
+    volatile int *token;
 
     /* number of processes */
     int n;
@@ -25,7 +25,7 @@ class bakery : public algo {
     bakery(int i);
 
     /* returns maximum value from already present tokens */
-    int max(int *token);
+    int max(volatile int *token);
 
 public:
 
